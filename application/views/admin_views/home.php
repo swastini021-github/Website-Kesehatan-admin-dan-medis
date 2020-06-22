@@ -35,86 +35,77 @@
       </div>
     </div>
   </div>
-  < class="row">
-    <div class="col-md-6">
-      <?php
-      $this->db->select('bulan,tinggi_badan');
-      $dataProdukChart = $this->db->get("tb_chart")->result();
-      foreach ($dataProdukChart as $k => $v) {
-        $arrProd[] = ['label' => $v->bulan, 'y' => $v->tinggi_badan];
-      }
-      // print_r(json_encode($arrProd, JSON_NUMERIC_CHECK));die();
-      ?>
-
-      <script type="text/javascript">
-        window.onload = function() {
-
-          var chart = new CanvasJS.Chart("chartContainer", {
-            theme: "light1", // "light2", "dark1", "dark2"
-            animationEnabled: false, // change to true
-            title: {
-              text: "Grafik Tinggi Badan"
-            },
-            data: [{
-              // Change type to "bar", "area", "spline", "pie",etc.
-              type: "column",
-              /*dataPoints: [
-                  { label: "apple",  y: 10  },
-                  { label: "orange", y: 15  },
-                  { label: "banana", y: 25  },
-                  { label: "mango",  y: 30  },
-                  { label: "grape",  y: 28  }
-              ]*/
-              dataPoints: <?= json_encode($arrProd, JSON_NUMERIC_CHECK); ?>
-
-            }]
-          });
-          chart.render();
-
-        }
-      </script>
-      <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
+  <hr />
+  <div class="row">
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small info coloured-icon"><a href="<?= site_url('admin/index') ?>">
+          <i class="icon fa  fa-3x"></i>
+          <div class="info">
+            <h4>Tinggi Badan</h4>
+          </div>
+      </div>
     </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small warning coloured-icon"><a href="<?= site_url('admin/grafik2') ?>">
+          <i class="icon fa  fa-3x"></i>
+          <div class="info">
+            <h4>Berat Badan</h4>
+          </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small danger coloured-icon"><a href="<?= site_url('admin/gragik3') ?>">
+          <i class="icon fa  fa-3x"></i>
+          <div class="info">
+            <h4>Tensi</h4>
+          </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="widget-small danger coloured-icon"><a href="<?= site_url('admin/grafik4') ?>">
+          <i class="icon fa  fa-3x"></i>
+          <div class="info">
+            <h4>Kadar Gula</h4>
+          </div>
+      </div>
+    </div>
+  </div>
+  <?php
+  $this->db->select('bulan,tinggi_badan');
+  $dataProdukChart = $this->db->get("tb_chart")->result();
+  foreach ($dataProdukChart as $k => $v) {
+    $arrProd[] = ['label' => $v->bulan, 'y' => $v->tinggi_badan];
+  }
+  // print_r(json_encode($arrProd, JSON_NUMERIC_CHECK));die();
+  ?>
 
-    <?php
-    $this->db->select('bulan,tinggi_badan');
-    $dataProdukChart = $this->db->get("tb_chart")->result();
-    foreach ($dataProdukChart as $k => $v) {
-      $arrProd[] = ['label' => $v->bulan, 'y' => $v->tinggi_badan];
+  <script type="text/javascript">
+    window.onload = function() {
+
+      var chart = new CanvasJS.Chart("chartContainer", {
+        theme: "light1", // "light2", "dark1", "dark2"
+        animationEnabled: false, // change to true
+        title: {
+          text: "Grafik Tinggi Badan"
+        },
+        data: [{
+          // Change type to "bar", "area", "spline", "pie",etc.
+          type: "column",
+          /*dataPoints: [
+              { label: "apple",  y: 10  },
+              { label: "orange", y: 15  },
+              { label: "banana", y: 25  },
+              { label: "mango",  y: 30  },
+              { label: "grape",  y: 28  }
+          ]*/
+          dataPoints: <?= json_encode($arrProd, JSON_NUMERIC_CHECK); ?>
+
+        }]
+      });
+      chart.render();
+
     }
-    // print_r(json_encode($arrProd, JSON_NUMERIC_CHECK));die();
-    ?>
-
-    <script type="text/javascript">
-      window.onload = function() {
-
-        var chart = new CanvasJS.Chart("chartContainer", {
-          theme: "light1", // "light2", "dark1", "dark2"
-          animationEnabled: false, // change to true
-          title: {
-            text: "Grafik Tinggi Badan"
-          },
-          data: [{
-            // Change type to "bar", "area", "spline", "pie",etc.
-            type: "column",
-            /*dataPoints: [
-                { label: "apple",  y: 10  },
-                { label: "orange", y: 15  },
-                { label: "banana", y: 25  },
-                { label: "mango",  y: 30  },
-                { label: "grape",  y: 28  }
-            ]*/
-            dataPoints: <?= json_encode($arrProd, JSON_NUMERIC_CHECK); ?>
-
-          }]
-        });
-        chart.render();
-
-      }
-    </script>
-    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
-
-
+  </script>
+  <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
 </div>

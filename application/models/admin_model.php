@@ -249,4 +249,74 @@ class admin_model extends CI_Model
     }
     //Akhir Fungsi Kesehatan
 
+
+    function get_tb_berita()
+    {
+        $data = $this->db->get('tb_berita')->result_array();
+        return $data;
+    }
+
+    function get_berita($limit, $page)
+    {
+        //mengurutkan data dari data terbaru
+        $this->db->order_by('id_berita', 'desc');
+        $this->db->limit($limit, $page);
+        $data = $this->db->get('tb_berita')->result_array();
+        return $data;
+    }
+    function save_berita($post)
+    {
+        $config = array(
+            'allowed_types' => 'jpg|jpeg|gif|png|bmp',
+            'upload_path' => realpath('./media1/images/'),
+
+        );
+        $this->load->library('upload', $config);
+        $this->upload->do_upload();
+        //menampung post yang dikirim oleh controller untuk disimpan dalam array sesuai field dalam tabel
+        $data = array(
+            //'sesuai field tabel'=>'sesuai name input dalam form'
+            //'id_berita'=>$post['id_berita'],
+            'judul_berita' => $post['judul'],
+            'isi_berita' => $post['berita'],
+            'penulis' => $post['penulis'],
+            'tanggal_berita' => $post['tanggal_berita'],
+            'foto' => $_FILES['filefoto']['name']
+        );
+        //menyimpan data ke tabel
+        $this->db->insert('tb_berita', $data);
+    }
+    function save_update_berita($post)
+    {
+        $config = array(
+            'allowed_types' => 'jpg|jpeg|gif|png|bmp',
+            'upload_path' => realpath('./media1/images'),
+
+        );
+        $this->load->library('upload', $config);
+        $this->upload->do_upload();
+        //menampung post yang dikirim oleh controller untuk disimpan dalam array sesuai field dalam tabel
+        $data = array(
+            //'sesuai field tabel'=>'sesuai name input dalam form'
+            //'id_berita'=>$post['id_berita'],
+            'judul_berita' => $post['judul'],
+            'isi_berita' => $post['berita'],
+            'penulis' => $post['penulis'],
+            'tanggal_berita' => $post['tanggal_berita'],
+            'foto' => $_FILES['filefoto']['name']
+        );
+        //menyimpan data ke tabel
+        $this->db->where('md5(id_berita)', $post['id_berita']);
+        $this->db->update('tb_berita', $data);
+    }
+    function delete_berita($where, $table)
+    {
+        $this->db->where($where);
+        $this->db->delete($table);
+    }
+    function get_berita_by_kode($kode)
+    {
+        $hsl = $this->db->query("SELECT * FROM tb_berita WHERE id_berita='$kode'");
+        return $hsl;
+    }
 }

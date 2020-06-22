@@ -18,6 +18,30 @@ class admin extends CI_Controller
         //$data['sidebar']='sidebar';
         $this->load->view('template', $data);
     }
+    function grafik2()
+    {
+        $data['title'] = "Sistem Informasi Kesehatan Desa";
+        $data['meta'] = "Sistem Informasi Kesehatan Desa";
+        $data['content'] = 'admin_views/grafik2';
+        //$data['sidebar']='sidebar';
+        $this->load->view('template', $data);
+    }
+    function grafik3()
+    {
+        $data['title'] = "Sistem Informasi Kesehatan Desa";
+        $data['meta'] = "Sistem Informasi Kesehatan Desa";
+        $data['content'] = 'admin_views/grafik3';
+        //$data['sidebar']='sidebar';
+        $this->load->view('template', $data);
+    }
+    function grafik4()
+    {
+        $data['title'] = "Sistem Informasi Kesehatan Desa";
+        $data['meta'] = "Sistem Informasi Kesehatan Desa";
+        $data['content'] = 'admin_views/grafik4';
+        //$data['sidebar']='sidebar';
+        $this->load->view('template', $data);
+    }
 
     //Awal Fungsi User
     function input_user()
@@ -272,4 +296,67 @@ class admin extends CI_Controller
         redirect('admin/data_kesehatan');
     }
     //Akhir pungsi kesehatan
+
+    function input_berita()
+    {
+        $data['title'] = "berita";
+        $data['meta'] = "berita";
+        $data['content'] = 'admin_views/input_berita';
+        //$data['sidebar']='sidebar';
+        $this->load->view('template', $data);
+    }
+    function save_berita()
+    {
+        $this->form_validation->set_rules('judul', 'Judul', 'required', array('required' => 'Judul harus diisi'));
+        $this->form_validation->set_rules('penulis', 'Penulis', 'required', array('required' => 'Nama penulis harus diisi'));
+        $this->form_validation->set_rules('tanggal_berita', 'Tanggal', 'required', array('required' => 'Tanggal harus diisi'));
+        if ($this->form_validation->run() == FALSE) {
+            $this->input_berita();
+        } else {
+            if ($_POST['id_berita'] != '') {
+                //exit();
+                $this->admin_model->save_update_berita($_POST);
+            } else {
+                $this->admin_model->save_berita($_POST);
+            }
+            //akses fungsi untuk menampilkan halaman daftar peserta
+            redirect('admin/daftar_berita');
+        }
+    }
+    function daftar_berita($page = 0)
+    {
+        $data['title'] = "daftar berita";
+        $data['meta'] = "daftar berita";
+        $config['total_rows'] = $this->admin_model->get_num_rows('tb_berita');
+        $config['per_page'] = 4;
+        $config['base_url'] = site_url('admin/daftar_berita');
+        $data['berita'] = $this->admin_model->get_berita($config['per_page'], $page);
+        $this->pagination->initialize($config);
+        $data['content'] = 'admin_views/daftar_berita';
+        $this->load->view('template', $data);
+    }
+    function view()
+    {
+        $kode = $this->uri->segment(3);
+        $data['data'] = $this->admin_model->get_berita_by_kode($kode);
+        $data['content'] = 'admin_views/detail_berita';
+        $this->load->view('template', $data);
+    }
+    function update_berita($id_berita)
+    {
+        $data['title'] = "Update Data";
+        $data['meta'] = "Update data berita";
+        $data['content'] = 'admin_views/input_berita';
+        //$data['sidebar']='sidebar';
+        $this->db->where('md5(id_berita)', $id_berita);
+        $data['berita'] = $this->db->get('tb_berita')->row_array();
+        //print_r($data['pegawai']);exit();
+        $this->load->view('template', $data);
+    }
+    function delete_berita($id_berita)
+    {
+        $where = array('md5(id_berita)' => $id_berita);
+        $this->admin_model->delete_berita($where, 'tb_berita');
+        redirect('admin/daftar_berita');
+    }
 }

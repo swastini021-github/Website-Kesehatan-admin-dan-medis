@@ -18,6 +18,30 @@ class medis extends CI_Controller
         //$data['sidebar']='sidebar';
         $this->load->view('template_medis', $data);
     }
+    function grafik2()
+    {
+        $data['title'] = "Sistem Informasi Kesehatan Desa";
+        $data['meta'] = "Sistem Informasi Kesehatan Desa";
+        $data['content'] = 'medis_views/grafik2';
+        //$data['sidebar']='sidebar';
+        $this->load->view('template_medis', $data);
+    }
+    function grafik3()
+    {
+        $data['title'] = "Sistem Informasi Kesehatan Desa";
+        $data['meta'] = "Sistem Informasi Kesehatan Desa";
+        $data['content'] = 'medis_views/grafik3';
+        //$data['sidebar']='sidebar';
+        $this->load->view('template_medis', $data);
+    }
+    function grafik4()
+    {
+        $data['title'] = "Sistem Informasi Kesehatan Desa";
+        $data['meta'] = "Sistem Informasi Kesehatan Desa";
+        $data['content'] = 'medis_views/grafik4';
+        //$data['sidebar']='sidebar';
+        $this->load->view('template_medis', $data);
+    }
 
     //Awal Fungsi  KK
     function input_kk()
